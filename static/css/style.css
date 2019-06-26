@@ -1,0 +1,64 @@
+.l-brand-link:hover {
+    text-decoration: none;
+}
+
+.l-header .name {
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+}
+
+.l-home {
+    margin-top: 65px;
+}
+
+.l-home input[name="search"] {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.l-home .btn {
+    width: 110px;
+}
+
+.l-auctions .card small {
+    position: relative;
+    bottom: -25px;
+}
+
+.l-auction .make-stake-form input {
+    width: 100px;
+}
+
+.l-auction .comments .children {
+    margin-left: 50px;
+}
+
+.l-auction .comments .tree > .branch > .children {
+    margin-left: 0;
+}
+
+.l-auction .comments .name {
+    font-weight: bold;
+}
+
+.l-auction .comments .date {
+    margin-left: 25px;
+    color: #adb5c7;
+}
+
+.l-auction-edit .form-control {
+    width: 608px;
+}
+
+.l-auction-edit .custom-checkbox {
+    position: relative;
+    top: 8px;
+}
+
+.l-user-edit .form-control {
+    width: 608px;
+}

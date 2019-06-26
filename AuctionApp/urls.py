@@ -21,10 +21,12 @@ from user import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', auction_views.auctions, name='auctions'),
+    path('', auction_views.home, name='home'),
+    path('auctions', auction_views.auctions, name='auctions'),
     path('auctions/<int:auction_id>', auction_views.auction, name='auction'),
     path('auctions/<int:auction_id>/edit', auction_views.auction_edit, name='auction_edit'),
     path('auctions/<int:auction_id>/save', auction_views.auction_save, name='auction_save'),
     path('auctions/<int:auction_id>/delete', auction_views.auction_save, name='auction_delete'),
-    path('users/<int:user_id>', user_views.user, name='user')
+    path('users/<int:user_id>/edit', user_views.user_edit, name='user_edit'),
+    path('users/<int:user_id>/save', user_views.user_save, name='user_save'),
 ]

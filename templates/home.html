@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block title %}Auction page{% endblock %}
+{% block header %}
+    <div class="row pt-4 pb-5 l-header">
+        <div class="col-2"></div>
+        <div class="col-8">
+
+        </div>
+        <div class="col-2">
+            {#                    <a href="#" class="btn btn-outline-primary">Войти</a>#}
+            <div class="dropdown">
+                <a href="#" class="name" title="username"
+                   data-toggle="dropdown">username</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/auctions">Мои аукционы</a>
+                    <a class="dropdown-item" href="/users/1/edit">Редактировать данные</a>
+                    <a class="dropdown-item" href="#">Сменить пароль</a>
+                    <a class="dropdown-item" href="#">Выход</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block main %}
+    <div class="l-home text-center">
+        <div class="mb-4">
+            <a href="/" class="h1 l-brand-link">Аукционы</a>
+        </div>
+        <div>
+            <form>
+                <div class="mb-3">
+                    <input type="text" name="search" class="form-control" placeholder="Введите поисковый запрос">
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-lg" type="submit">Поиск</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

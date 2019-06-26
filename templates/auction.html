@@ -1,5 +1,340 @@
 {% extends 'layout.html' %}
 {% block title %}Auction page{% endblock %}
 {% block main %}
-The auction
+    <div class="l-auction">
+        <div class="row">
+            <div class="col-6">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400"
+                                 xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                 focusable="false"
+                                 role="img" aria-label="Placeholder: First slide"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#777"></rect>
+                                <text x="50%" y="50%" fill="#555" dy=".3em">First slide</text>
+                            </svg>
+                        </div>
+                        <div class="carousel-item">
+                            <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400"
+                                 xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                 focusable="false"
+                                 role="img" aria-label="Placeholder: Second slide"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#666"></rect>
+                                <text x="50%" y="50%" fill="#444" dy=".3em">Second slide</text>
+                            </svg>
+                        </div>
+                        <div class="carousel-item">
+                            <svg class="bd-placeholder-img bd-placeholder-img-lg d-block w-100" width="800" height="400"
+                                 xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"
+                                 focusable="false"
+                                 role="img" aria-label="Placeholder: Third slide"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#555"></rect>
+                                <text x="50%" y="50%" fill="#333" dy=".3em">Third slide</text>
+                            </svg>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6">
+                <h1 class="h2 mb-4">Коллекционные вазы Германия</h1>
+                <hr>
+                <p>
+                    стартовая цена: <strong>1000 р</strong><br>
+                    блиц цена: <strong>4500 р</strong>
+                </p>
+                <hr>
+                <p>
+                    завершается: <strong>28.06.2019 10:18</strong><br>
+                    сделано ставок: <strong>1</strong><br>
+                    максимальная ставка: <strong class="text-success">1500 р</strong>
+                </p>
+                <p>
+                    <small class="text-muted">Местоположение лота: Казань</small>
+                </p>
+                {#                <form class="make-stake-form form-inline">#}
+                {#                    <label for="stake" class="font-weight-bold">Ваша ставка (р.)</label>#}
+                {#                    <input type="text" class="ml-2 form-control" id="stake" value="1500">#}
+                {#                    <button type="submit" class="ml-2 btn btn-primary">Сделать ставку</button>#}
+                {#                </form>#}
+                <a href="/auctions/1/edit" class="btn btn-primary">Редактировать</a>
+                {#                <p class="text-warning h4">Аукцион окончен, победил username</p>#}
+                {#                <p class="text-warning">Вы можете связаться с username: +7 (999) 999-99-99</p>#}
+                {#                <p class="text-warning h4">Поздравляем! Вы победили!</p>#}
+                {#                <p class="text-warning">Вы можете связаться с продавцом: +7 (999) 999-99-99</p>#}
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#description" role="tab"
+                           aria-controls="description" aria-selected="true">Описание</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#q-and-a" role="tab"
+                           aria-controls="q-and-a" aria-selected="false">Вопрос/Ответ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#stakes" role="tab"
+                           aria-controls="stakes" aria-selected="false">Ставки</a>
+                    </li>
+                </ul>
+                <div class="tab-content p-2">
+                    <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="home-tab">
+                        Описание
+                    </div>
+                    <div class="tab-pane fade" id="q-and-a" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="comments pt-3">
+                            <form>
+                                <div class="form-row">
+                                    <div class="col-9">
+                                        <textarea name="comment" class="form-control"
+                                                  placeholder="Ваш вопрос"></textarea>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button class="btn btn-primary" type="submit">Отправить</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="tree mt-5">
+                                <div class="branch">
+                                    <div class="children">
+                                        <div class="branch">
+                                            <div class="comment mb-3">
+                                                <div class="info mb-2">
+                                                    <span class="name">Имя Пользователя</span>
+                                                    <span class="date">26 июня 2019 13:42</span>
+                                                </div>
+                                                <div class="text mb-2">Текст вопроса от пользователя</div>
+                                                <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+                                                <div class="ondemand d-none">
+                                                    <form>
+                                                        <div class="form-row">
+                                                            <div class="col-9">
+                                                                <textarea name="comment" class="form-control"
+                                                                          placeholder="Ваш вопрос"></textarea>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    Отправить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="children"></div>
+                                        </div>
+                                        <div class="branch">
+                                            <div class="comment mb-3">
+                                                <div class="info mb-2">
+                                                    <span class="name">Имя Пользователя</span>
+                                                    <span class="date">26 июня 2019 13:42</span>
+                                                </div>
+                                                <div class="text mb-2">Текст вопроса от пользователя</div>
+                                                <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+                                                <div class="ondemand d-none">
+                                                    <form>
+                                                        <div class="form-row">
+                                                            <div class="col-9">
+                                                                <textarea name="comment" class="form-control"
+                                                                          placeholder="Ваш вопрос"></textarea>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    Отправить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="children">
+                                                <div class="branch">
+                                                    <div class="comment mb-3">
+                                                        <div class="info mb-2">
+                                                            <span class="name">Имя Пользователя</span>
+                                                            <span class="date">26 июня 2019 13:42</span>
+                                                        </div>
+                                                        <div class="text mb-2">Текст вопроса от пользователя</div>
+                                                        <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+                                                        <div class="ondemand d-none">
+                                                            <form>
+                                                                <div class="form-row">
+                                                                    <div class="col-9">
+                                                                        <textarea name="comment" class="form-control"
+                                                                                  placeholder="Ваш вопрос"></textarea>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <button class="btn btn-primary" type="submit">
+                                                                            Отправить
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="children">
+                                                        <div class="branch">
+                                                            <div class="comment mb-3">
+                                                                <div class="info mb-2">
+                                                                    <span class="name">Имя Пользователя</span>
+                                                                    <span class="date">26 июня 2019 13:42</span>
+                                                                </div>
+                                                                <div class="text mb-2">Текст вопроса от пользователя
+                                                                </div>
+                                                                <div class="mb-2"><a href="#"
+                                                                                     class="respond">Ответить</a></div>
+                                                                <div class="ondemand d-none">
+                                                                    <form>
+                                                                        <div class="form-row">
+                                                                            <div class="col-9">
+                                                                        <textarea name="comment" class="form-control"
+                                                                                  placeholder="Ваш вопрос"></textarea>
+                                                                            </div>
+                                                                            <div class="col-auto">
+                                                                                <button class="btn btn-primary"
+                                                                                        type="submit">
+                                                                                    Отправить
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="children"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="branch">
+                                                    <div class="comment mb-3">
+                                                        <div class="info mb-2">
+                                                            <span class="name">Имя Пользователя</span>
+                                                            <span class="date">26 июня 2019 13:42</span>
+                                                        </div>
+                                                        <div class="text mb-2">Текст вопроса от пользователя</div>
+                                                        <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+                                                        <div class="ondemand d-none">
+                                                            <form>
+                                                                <div class="form-row">
+                                                                    <div class="col-9">
+                                                                        <textarea name="comment" class="form-control"
+                                                                                  placeholder="Ваш вопрос"></textarea>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <button class="btn btn-primary" type="submit">
+                                                                            Отправить
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="children"></div>
+                                                </div>
+                                                <div class="branch">
+                                                    <div class="comment mb-3">
+                                                        <div class="info mb-2">
+                                                            <span class="name">Имя Пользователя</span>
+                                                            <span class="date">26 июня 2019 13:42</span>
+                                                        </div>
+                                                        <div class="text mb-2">Текст вопроса от пользователя</div>
+                                                        <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+                                                        <div class="ondemand d-none">
+                                                            <form>
+                                                                <div class="form-row">
+                                                                    <div class="col-9">
+                                                                        <textarea name="comment" class="form-control"
+                                                                                  placeholder="Ваш вопрос"></textarea>
+                                                                    </div>
+                                                                    <div class="col-auto">
+                                                                        <button class="btn btn-primary" type="submit">
+                                                                            Отправить
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="children"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="branch">
+                                            <div class="comment mb-3">
+                                                <div class="info mb-2">
+                                                    <span class="name">Имя Пользователя</span>
+                                                    <span class="date">26 июня 2019 13:42</span>
+                                                </div>
+                                                <div class="text mb-2">Текст вопроса от пользователя</div>
+                                                <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+                                                <div class="ondemand d-none">
+                                                    <form>
+                                                        <div class="form-row">
+                                                            <div class="col-9">
+                                                                <textarea name="comment" class="form-control"
+                                                                          placeholder="Ваш вопрос"></textarea>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <button class="btn btn-primary" type="submit">
+                                                                    Отправить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="children"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="stakes" role="tabpanel" aria-labelledby="contact-tab">
+                        <table class="table table-sm table-hover table-borderless">
+                            <thead>
+                            <tr>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Пользователь</th>
+                                <th scope="col">Ставка (р.)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>26 июня 2019 13:42</td>
+                                <td>user1</td>
+                                <td>1500</td>
+                            </tr>
+                            <tr>
+                                <td>25 июня 2019 12:24</td>
+                                <td>user2</td>
+                                <td>1200</td>
+                            </tr>
+                            <tr>
+                                 <td>25 июня 2019 12:23</td>
+                                <td>user3</td>
+                                <td>1000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

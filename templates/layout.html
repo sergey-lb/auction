@@ -5,9 +5,61 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    {% block main %}{% endblock %}
+<div class="container">
+    {% block header %}
+        <div class="row pt-4 pb-5 l-header">
+            <div class="col-2"><a href="/" class="h3 l-brand-link">Аукционы</a></div>
+            <div class="col-8">
+                <form>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <input type="text" name="search" class="form-control"
+                                   placeholder="Введите поисковый запрос">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">Поиск</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-2">
+                {#                    <a href="#" class="btn btn-outline-primary">Войти</a>#}
+                <div class="dropdown">
+                    <a href="#" class="name" title="username"
+                       data-toggle="dropdown">username</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/auctions">Мои аукционы</a>
+                        <a class="dropdown-item" href="/users/1/edit">Редактировать данные</a>
+                        <a class="dropdown-item" href="#">Сменить пароль</a>
+                        <a class="dropdown-item" href="#">Выход</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    <div class="row">
+        <div class="col">
+            {% block main %}{% endblock %}
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

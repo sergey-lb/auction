@@ -3,6 +3,14 @@ from django.shortcuts import render
 
 
 # Create your views here.
+def home(request: HttpRequest):
+    return render(
+        request,
+        template_name='home.html',
+        context={}
+    )
+
+
 def auctions(request: HttpRequest):
     return render(
         request,
