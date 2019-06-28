@@ -11,6 +11,15 @@
     max-width: 160px;
 }
 
+
+.l-form .form-control {
+    width: 608px;
+}
+
+.alert {
+    width: 798px;
+}
+
 .l-home {
     margin-top: 65px;
 }
@@ -50,15 +59,7 @@
     color: #adb5c7;
 }
 
-.l-auction-edit .form-control {
-    width: 608px;
-}
-
 .l-auction-edit .custom-checkbox {
     position: relative;
     top: 8px;
-}
-
-.l-user-edit .form-control {
-    width: 608px;
 }
