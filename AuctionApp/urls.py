@@ -18,7 +18,6 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
 from auction import views as auction_views
-from user import views as user_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,8 +27,6 @@ urlpatterns = [
     path('auctions/<int:auction_id>/edit', auction_views.auction_edit, name='auction_edit'),
     path('auctions/<int:auction_id>/save', auction_views.auction_save, name='auction_save'),
     path('auctions/<int:auction_id>/delete', auction_views.auction_save, name='auction_delete'),
-    path('users/<int:user_id>/edit', user_views.user_edit, name='user_edit'),
-    path('users/<int:user_id>/save', user_views.user_save, name='user_save'),
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
