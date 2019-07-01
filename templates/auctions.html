@@ -2,139 +2,42 @@
 {% block title %}Auctions list{% endblock %}
 {% block main %}
     <div class="l-auctions">
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-2">
-                    <a href="/auctions/1"><svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg></a>
-                </div>
-                <div class="col-7">
-                    <div class="card-body">
-                        <a class="card-title h5 d-block" href="/auctions/1">Коллекционные вазы Германия</a>
-                        <p>
-                            <strong>завершается:</strong> 28.06.2019 10:18<br>
-                            <strong>сделано ставок:</strong> 1<br>
-                            <small class="text-muted">Местоположение лота лота: Казань</small>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card-body">
-                        <p>
-                            стартовая цена: <strong>1000 р</strong><br>
-                            блиц цена: <strong>4500 р</strong><br>
-                            максимальная ставка: <strong class="text-success">1500 р</strong>
-                        </p>
-                    </div>
-                </div>
+        {%  if request.view_name == 'auction.views.user_auctions' %}
+            <a href="{% url 'auction_edit' 0 %}" class="btn btn-primary mb-4">Создать аукцион</a>
+        {% endif %}
+        {% if not auctions %}
+            <div class="alert alert-primary" role="alert">
+                Ничего не найдено
             </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-2">
-                    <a href="/auctions/1"><svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg></a>
-                </div>
-                <div class="col-7">
-                    <div class="card-body">
-                        <a class="card-title h5 d-block" href="/auctions/1">Коллекционные вазы Германия</a>
-                        <p>
-                            <strong>завершается:</strong> 28.06.2019 10:18<br>
-                            <strong>сделано ставок:</strong> 1<br>
-                            <small class="text-muted">Местоположение лота: Казань</small>
-                        </p>
+        {% else %}
+            {% for auction in auctions %}
+                <div class="card mb-3">
+                    <div class="row no-gutters">
+                        <div class="col-2">
+                            <a href="{% url 'auction' auction.id %}"><svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg></a>
+                        </div>
+                        <div class="col-7">
+                            <div class="card-body">
+                                <a class="card-title h5 d-block" href="{% url 'auction' auction.id %}">{{ auction.name }}</a>
+                                <p>
+                                    <strong>завершается:</strong> {{ auction.end_date }}<br>
+                                    <strong>сделано ставок:</strong> {{ auction.bets.count }}<br>
+                                    <small class="text-muted">Местоположение лота лота: {{ auction.location_city }}</small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="card-body">
+                                <p>
+                                    стартовая цена: <strong>{{ auction.start_price }} р</strong><br>
+                                    блиц цена: <strong>{{ auction.blitz_price }} р</strong><br>
+                                    максимальная ставка: <strong class="text-success">{{ auction.max_bet }} р</strong>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="card-body">
-                        <p>
-                            стартовая цена: <strong>1000 р</strong><br>
-                            блиц цена: <strong>4500 р</strong><br>
-                            максимальная ставка: <strong class="text-success">1500 р</strong>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-2">
-                    <a href="/auctions/1"><svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg></a>
-                </div>
-                <div class="col-7">
-                    <div class="card-body">
-                        <a class="card-title h5 d-block" href="/auctions/1">Коллекционные вазы Германия</a>
-                        <p>
-                            <strong>завершается:</strong> 28.06.2019 10:18<br>
-                            <strong>сделано ставок:</strong> 1<br>
-                            <small class="text-muted">Местоположение лота: Казань</small>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card-body">
-                        <p>
-                            стартовая цена: <strong>1000 р</strong><br>
-                            блиц цена: <strong>4500 р</strong><br>
-                            максимальная ставка: <strong class="text-success">1500 р</strong>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-2">
-                    <a href="/auctions/1"><svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg></a>
-                </div>
-                <div class="col-7">
-                    <div class="card-body">
-                        <a class="card-title h5 d-block" href="/auctions/1">Коллекционные вазы Германия</a>
-                        <p>
-                            <strong>завершается:</strong> 28.06.2019 10:18<br>
-                            <strong>сделано ставок:</strong> 1<br>
-                            <small class="text-muted">Местоположение лота: Казань</small>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card-body">
-                        <p>
-                            стартовая цена: <strong>1000 р</strong><br>
-                            блиц цена: <strong>4500 р</strong><br>
-                            максимальная ставка: <strong class="text-success">1500 р</strong>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card mb-3">
-            <div class="row no-gutters">
-                <div class="col-2">
-                    <a href="/auctions/1"><svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image</text></svg></a>
-                </div>
-                <div class="col-7">
-                    <div class="card-body">
-                        <a class="card-title h5 d-block" href="/auctions/1">Коллекционные вазы Германия</a>
-                        <p>
-                            <strong>завершается:</strong> 28.06.2019 10:18<br>
-                            <strong>сделано ставок:</strong> 1<br>
-                            <small class="text-muted">Местоположение лота: Казань</small>
-                        </p>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card-body">
-                        <p>
-                            стартовая цена: <strong>1000 р</strong><br>
-                            блиц цена: <strong>4500 р</strong><br>
-                            максимальная ставка: <strong class="text-success">1500 р</strong>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

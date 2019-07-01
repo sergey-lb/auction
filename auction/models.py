@@ -12,7 +12,18 @@ class Auction(models.Model):
     end_date = models.DateTimeField()
     location_city = models.CharField(max_length=400)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    started = models.BooleanField()
+    started = models.BooleanField(default=False)
+
+    def max_bet(self):
+        bets = self.bets.order_by('-bet')[:1]
+        if bets:
+            return bets[0].bet
+
+        return 0
+
+    def first_level_comments(self):
+        comments = self.comments.filter(parent_id__isnull=True)
+        return comments
 
 
 class Bet(models.Model):

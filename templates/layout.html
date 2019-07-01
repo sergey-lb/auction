@@ -16,15 +16,20 @@
 <body>
 <div class="container">
     <div class="row pt-4 pb-5 l-header">
-        {% if view_name == 'auction.views.home' %}
+        {% if request.view_name == 'auction.views.home' %}
             <div class="col-10"></div>
         {% else %}
-            <div class="col-2"><a href="/" class="h3 l-brand-link">Аукционы</a></div>
+            <div class="col-2"><a href="{% url 'home' %}" class="h3 l-brand-link">Аукционы</a></div>
             <div class="col-8">
-                <form>
+                <form action="{% url 'auctions' %}">
                     <div class="form-row">
                         <div class="col-10">
-                            <input type="text" name="search" class="form-control"
+                            <input type="text"
+                                   name="search"
+                                   class="form-control"
+                                   {% if request.GET.search %}
+                                        value="{{ request.GET.search }}"
+                                   {% endif %}
                                    placeholder="Введите поисковый запрос">
                         </div>
                         <div class="col-auto">
@@ -40,12 +45,12 @@
                     <a href="#" class="name" title="username"
                        data-toggle="dropdown">{{ user.username }}</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/auctions">Мои аукционы</a>
+                        <a class="dropdown-item" href="{% url 'user_auctions' user.id %}">Мои аукционы</a>
                         <a class="dropdown-item" href="{% url 'password_change' %}">Сменить пароль</a>
                         <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
                     </div>
                 </div>
-            {% elif view_name != 'django.contrib.auth.views.LoginView' %}
+            {% elif request.view_name != 'django.contrib.auth.views.LoginView' %}
                 <a href="{% url 'login' %}" class="btn btn-outline-primary">Войти</a>
             {% endif %}
         </div>

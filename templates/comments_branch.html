@@ -1,0 +1,37 @@
+<div class="branch">
+    {% for comment in comments.all|dictsortreversed:"id" %}
+        <div class="comment mb-3">
+            <div class="info mb-2">
+                <span class="name">{{ comment.user.username }}</span>
+                <span class="date">{{ comment.date }}</span>
+            </div>
+            <div class="text mb-2">{{ comment.comment }}</div>
+            <div class="mb-2"><a href="#" class="respond">Ответить</a></div>
+            <div class="ondemand{% if comment.id != parent_of_empty_comment %} d-none{% endif %}">
+                <form action="{% url 'comment_save' comment.auction.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-9">
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <textarea name="comment" class="form-control{% if comment.id == parent_of_empty_comment %} is-invalid{% endif %}"
+                                      placeholder="Ваш вопрос"></textarea>
+                            {% if comment.id == parent_of_empty_comment %}
+                                <div class="invalid-feedback">Обязательное поле</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary" type="submit">
+                                Отправить
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="children">
+            {% if comment.comments.count > 0 %}
+                {% include 'comments_branch.html' with parent_of_empty_comment=parent_of_empty_comment comments=comment.comments %}
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
