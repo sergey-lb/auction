@@ -11,7 +11,6 @@
     max-width: 160px;
 }
 
-
 .l-form .form-control {
     width: 608px;
 }
@@ -59,7 +58,43 @@
     color: #adb5c7;
 }
 
+.l-auction .carousel-inner {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    background-color: #f7f7f7;
+}
+
+.l-auction .carousel-inner img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .l-auction-edit .custom-checkbox {
     position: relative;
     top: 8px;
+}
+
+.l-auction-edit .gallery-widget .items {
+    margin-top: 10px;
+}
+
+.l-auction-edit .gallery-widget .item {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    margin: 10px;
+}
+
+.l-auction-edit .gallery-widget .item .close {
+    position: absolute;
+    top: -20px;
+    right: -17px;
+    opacity: 1;
+}
+
+.l-auction-edit .progress {
+    margin-top: 10px;
 }

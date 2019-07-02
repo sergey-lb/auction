@@ -6,13 +6,20 @@ from django.contrib.auth.models import User
 class Auction(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=400)
+    lc_name = models.CharField(max_length=400)
     description = models.TextField()
+    lc_description = models.TextField()
     start_price = models.IntegerField()
     blitz_price = models.IntegerField()
     end_date = models.DateTimeField()
     location_city = models.CharField(max_length=400)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     started = models.BooleanField(default=False)
+
+    def save(self, *args, **kwargs):
+        self.lc_name = self.name.lower()
+        self.lc_description = self.description.lower()
+        super().save(*args, **kwargs)
 
     def max_bet(self):
         bets = self.bets.order_by('-bet')[:1]

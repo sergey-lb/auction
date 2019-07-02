@@ -6,6 +6,7 @@ from auction.forms import AuctionForm
 from django.http import Http404
 from auction.models import Auction
 from django.db import IntegrityError
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -19,16 +20,32 @@ def home(request: HttpRequest):
 
 def auctions(request: HttpRequest):
     if 'search' in request.GET:
-        search = request.GET['search']
-        auctions = Auction.objects.filter(Q(name__contains=search) | Q(description__contains=search))
+        search = request.GET['search'].lower()
+        auctions = Auction.objects.filter(Q(lc_name__contains=search) | Q(lc_description__contains=search))
     else:
-        auctions=[]
+        search = ''
+        auctions=Auction.objects.all()
+
+    items_per_page = 10
+    paginator = Paginator(auctions, items_per_page)
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        raise Http404
+
+    if page not in paginator.page_range:
+        raise Http404
+
+    auctions = paginator.get_page(page)
 
     return render(
         request,
         template_name='auctions.html',
         context={
-            'auctions': auctions
+            'auctions': auctions,
+            'paginator': paginator,
+            'page': page,
+            'search': search
         }
     )
 
@@ -79,6 +96,7 @@ def auction_edit(request: HttpRequest, auction_id: int):
 
     if auction_id == 0:
         form = AuctionForm(data=form_data)
+        auction = None
     else:
         try:
             auction = Auction.objects.get(pk=auction_id)
@@ -93,6 +111,7 @@ def auction_edit(request: HttpRequest, auction_id: int):
         template_name='auction_edit.html',
         context={
             'auction_id': auction_id,
+            'auction': auction,
             'form': form
         }
     )

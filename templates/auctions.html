@@ -38,6 +38,21 @@
                     </div>
                 </div>
             {% endfor %}
+            {% if paginator.num_pages > 1 %}
+                <ul class="pagination">
+                    <li class="page-item"{% if page == 1 %} disabled{% endif %}>
+                        <a href="{% url 'auctions' %}?search={{ search }}&page=1" class="page-link"><span>&laquo;</span></a>
+                    </li>
+                    {% for i in paginator.page_range %}
+                        <li class="page-item{% if page == forloop.counter %} active{% endif %}">
+                            <a href="{% url 'auctions' %}?search={{ search }}&page={{ forloop.counter }}" class="page-link">{{ forloop.counter }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item{% if page == paginator.num_pages %} disabled{% endif %}">
+                        <a href="{% url 'auctions' %}?search={{ search }}&page={{ paginator.num_pages }}" class="page-link"><span>&raquo;</span></a>
+                    </li>
+                </ul>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}

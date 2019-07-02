@@ -13,12 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
+from AuctionApp import settings
 from auction import views as auction_views
 from comment import views as comment_views
+from photo import views as photo_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +36,7 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True)),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('django_registration.backends.one_step.urls')),
-    path('comments/<int:auction_id>/add', comment_views.comment_save, name='comment_save')
-]
+    path('comments/<int:auction_id>/add', comment_views.comment_save, name='comment_save'),
+    path('photo/<int:auction_id>/save', photo_views.photo_save, name='photo_save'),
+    path('photo/<int:auction_id>/<int:photo_id>/delete', photo_views.photo_delete, name='photo_delete')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
