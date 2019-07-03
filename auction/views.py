@@ -7,6 +7,7 @@ from django.http import Http404
 from auction.models import Auction
 from django.db import IntegrityError
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -91,6 +92,7 @@ def auction(request: HttpRequest, auction_id: int):
     )
 
 
+@login_required
 def auction_edit(request: HttpRequest, auction_id: int):
     form_data = request.session.pop('auction_form_data', None)
 
@@ -102,6 +104,8 @@ def auction_edit(request: HttpRequest, auction_id: int):
             auction = Auction.objects.get(pk=auction_id)
         except Auction.DoesNotExist:
             raise Http404
+        if auction.user.id != request.user.id:
+            return redirect('home')
         form = AuctionForm(data=form_data, instance=auction)
 
     form.is_valid()
@@ -117,6 +121,7 @@ def auction_edit(request: HttpRequest, auction_id: int):
     )
 
 
+@login_required
 def auction_save(request: HttpRequest, auction_id: int):
     if auction_id == 0:
         auction = Auction(user=request.user)
@@ -125,6 +130,8 @@ def auction_save(request: HttpRequest, auction_id: int):
             auction = Auction.objects.get(pk=auction_id)
         except Auction.DoesNotExist:
             return redirect('auction_edit', auction_id=auction_id)
+        if auction.user.id != request.user.id:
+            return redirect('home')
 
     form = AuctionForm(data=request.POST, instance=auction)
     if form.is_valid():
@@ -135,9 +142,12 @@ def auction_save(request: HttpRequest, auction_id: int):
     return redirect('auction_edit', auction_id=auction_id)
 
 
+@login_required
 def auction_delete(request: HttpRequest, auction_id: int):
     try:
         auction = Auction.objects.get(pk=auction_id)
+        if auction.user.id != request.user.id:
+            return redirect('home')
         auction.delete()
     except Auction.DoesNotExist:
         pass
@@ -145,15 +155,16 @@ def auction_delete(request: HttpRequest, auction_id: int):
     return redirect('user_auctions', user_id=request.user.id)
 
 
+@login_required
 def make_bet(request: HttpRequest, auction_id: int):
     if 'stake' not in request.POST:
         return redirect('auction', auction_id=auction_id)
-
     try:
         auction = Auction.objects.get(pk=auction_id)
     except Auction.DoesNotExist:
         return redirect('auction', auction_id=auction_id)
-
+    if auction.user.id == request.user.id:
+        return redirect('home')
     try:
         stake = int(request.POST['stake'])
     except ValueError:

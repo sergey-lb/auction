@@ -16,3 +16,5 @@ class ViewNameMiddleware(object):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         request.view_name = ".".join((view_func.__module__, view_func.__name__))
+        if request.view_name == 'AuctionApp.auth_helpers.wrapper_function':
+            request.view_name = view_func.view_name

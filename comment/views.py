@@ -2,9 +2,11 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from comment.models import Comment
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required
 def comment_save(request: HttpRequest, auction_id: int):
     request.session['comment_save_called'] = True
 

@@ -37,6 +37,15 @@
     bottom: -25px;
 }
 
+.l-auctions .card .col-2 > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: #f7f7f7;
+    background-size: cover;
+    background-position: center;
+}
+
 .l-auction .make-stake-form input {
     width: 100px;
 }

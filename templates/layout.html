@@ -16,10 +16,10 @@
 <div class="container">
     <div class="row pt-4 pb-5 l-header">
         {% if request.view_name == 'auction.views.home' %}
-            <div class="col-10"></div>
+            <div class="col-9"></div>
         {% else %}
             <div class="col-2"><a href="{% url 'home' %}" class="h3 l-brand-link">Аукционы</a></div>
-            <div class="col-8">
+            <div class="col-7">
                 <form action="{% url 'auctions' %}">
                     <div class="form-row">
                         <div class="col-10">
@@ -38,7 +38,7 @@
                 </form>
             </div>
         {% endif %}
-        <div class="col-2">
+        <div class="col-3">
             {% if user.is_authenticated %}
                 <div class="dropdown">
                     <a href="#" class="name" title="username"
@@ -49,8 +49,13 @@
                         <a class="dropdown-item" href="{% url 'logout' %}">Выход</a>
                     </div>
                 </div>
-            {% elif request.view_name != 'django.contrib.auth.views.LoginView' %}
-                <a href="{% url 'login' %}" class="btn btn-outline-primary">Войти</a>
+            {% else %}
+                {% if request.view_name != 'django.contrib.auth.views.LoginView' %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary">Войти</a>
+                {% endif %}
+                {% if request.view_name != 'django_registration.backends.one_step.views.RegistrationView' %}
+                    <a href="{% url 'django_registration_register' %}" class="btn btn-outline-primary">Регистрация</a>
+                {% endif %}
             {% endif %}
         </div>
     </div>
