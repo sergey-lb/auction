@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+import pytz
 
 
 # Create your models here.
@@ -31,6 +33,24 @@ class Auction(models.Model):
     def first_level_comments(self):
         comments = self.comments.filter(parent_id__isnull=True)
         return comments
+
+    def finished(self):
+        if self.max_bet() >= self.blitz_price:
+            return True
+        end_date = self.end_date
+        now = pytz.utc.localize(datetime.now())
+        if end_date <= now:
+            return True
+        return False
+
+    def winner(self):
+        if not self.finished():
+            return None
+        max_bet = self.bets.order_by('-bet')[:1]
+        if not max_bet:
+            return None
+        winner = max_bet.user
+        return winner
 
 
 class Bet(models.Model):

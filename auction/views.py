@@ -22,10 +22,10 @@ def home(request: HttpRequest):
 def auctions(request: HttpRequest):
     if 'search' in request.GET:
         search = request.GET['search'].lower()
-        auctions = Auction.objects.filter(Q(lc_name__contains=search) | Q(lc_description__contains=search))
+        auctions = Auction.objects.filter(Q(lc_name__contains=search) | Q(lc_description__contains=search), started=1)
     else:
         search = ''
-        auctions=Auction.objects.all()
+        auctions=Auction.objects.filter(started=1)
 
     items_per_page = 10
     paginator = Paginator(auctions, items_per_page)
@@ -79,6 +79,8 @@ def auction(request: HttpRequest, auction_id: int):
     elif bet_saved:
         active_tab = 'stakes'
 
+    permissions = _auction_view_permissions(auction, request.user)
+
     return render(
         request,
         template_name='auction.html',
@@ -87,9 +89,52 @@ def auction(request: HttpRequest, auction_id: int):
             'parent_of_empty_comment': parent_of_empty_comment,
             'comment_save_called': comment_save_called,
             'active_tab': active_tab,
-            'invalid_stake': invalid_stake
+            'invalid_stake': invalid_stake,
+            'permissions': permissions
         }
     )
+
+
+def _auction_view_permissions(auction, user):
+    winner = auction.winner()
+    finished = auction.finished()
+
+    permissions = dict()
+    permissions['can_make_a_stake'] = (
+        user.is_authenticated
+        and auction.started
+        and not finished
+        and user.id != auction.user.id
+    )
+    permissions['can_edit'] = (
+        user.is_authenticated
+        and not auction.started
+        and user.id == auction.user.id
+    )
+    permissions['can_delete'] = (
+        user.is_authenticated
+        and user.id == auction.user.id
+    )
+    permissions['can_see_winner_name'] = (
+        winner
+        and (not user.is_authenticated or user.is_authenticated and user.id != winner.id)
+    )
+    permissions['can_see_auction_ended_message'] = (
+        finished
+        and not permissions['can_see_winner_name']
+    )
+    permissions['can_see_winner_contact'] = (
+        user.is_authenticated
+        and winner
+        and auction.user.id == user.id
+    )
+    permissions['can_see_you_win_message'] = (
+        user.is_authenticated
+        and winner
+        and winner.id == user.id
+    )
+
+    return permissions
 
 
 @login_required
@@ -104,7 +149,7 @@ def auction_edit(request: HttpRequest, auction_id: int):
             auction = Auction.objects.get(pk=auction_id)
         except Auction.DoesNotExist:
             raise Http404
-        if auction.user.id != request.user.id:
+        if auction.user.id != request.user.id or auction.started:
             return redirect('home')
         form = AuctionForm(data=form_data, instance=auction)
 
@@ -130,7 +175,7 @@ def auction_save(request: HttpRequest, auction_id: int):
             auction = Auction.objects.get(pk=auction_id)
         except Auction.DoesNotExist:
             return redirect('auction_edit', auction_id=auction_id)
-        if auction.user.id != request.user.id:
+        if auction.user.id != request.user.id or auction.started:
             return redirect('home')
 
     form = AuctionForm(data=request.POST, instance=auction)
