@@ -61,4 +61,14 @@ window.addEventListener('load', function(){
             }
         });
     }
+
+    var script = document.createElement('script');
+    script.src = "/static/js/lib/jquery.datetimepicker.full.min.js";
+    $('body').append(script);
+
+    $.datetimepicker.setLocale('ru');
+    $('#end_date').datetimepicker({
+        format: 'Y-m-d H:i',
+        scrollInput: false
+    });
 });

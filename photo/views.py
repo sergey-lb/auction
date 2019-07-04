@@ -30,7 +30,7 @@ def photo_save(request: HttpRequest, auction_id: int):
             return JsonResponse({'result': 0, 'msg': 'Ошибка загрузки файла'})
     else:
         return JsonResponse({'result': 0, 'msg': 'Ошибка загрузки файла'})
-
+    request.session['open_gallery_tab'] = True
     return JsonResponse({'result': 1})
 
 
@@ -43,5 +43,5 @@ def photo_delete(request: HttpRequest, auction_id: int, photo_id: int):
         photo.delete()
     except Photo.DoesNotExist:
         pass
-
+    request.session['open_gallery_tab'] = True
     return redirect('auction_edit', auction_id=auction_id)

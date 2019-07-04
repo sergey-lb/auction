@@ -155,13 +155,16 @@ def auction_edit(request: HttpRequest, auction_id: int):
 
     form.is_valid()
 
+    open_gallery_tab = request.session.pop('open_gallery_tab', False)
+
     return render(
         request,
         template_name='auction_edit.html',
         context={
             'auction_id': auction_id,
             'auction': auction,
-            'form': form
+            'form': form,
+            'open_gallery_tab': open_gallery_tab
         }
     )
 

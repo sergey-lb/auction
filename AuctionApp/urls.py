@@ -24,6 +24,7 @@ from comment import views as comment_views
 from photo import views as photo_views
 from AuctionApp.auth_helpers import redirect_authenticated_user
 from django_registration.backends.one_step import views as registration_views
+from django_registration.forms import RegistrationFormUniqueEmail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,7 +38,9 @@ urlpatterns = [
     path('auctions/<int:auction_id>/makebet', auction_views.make_bet, name='make_bet'),
     path('accounts/login/', auth_views.LoginView.as_view(redirect_authenticated_user=True)),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register/', redirect_authenticated_user(registration_views.RegistrationView.as_view()), name='django_registration_register'),
+    path('accounts/register/', redirect_authenticated_user(registration_views.RegistrationView.as_view(
+        form_class=RegistrationFormUniqueEmail
+    )), name='django_registration_register'),
     path('accounts/', include('django_registration.backends.one_step.urls')),
     path('comments/<int:auction_id>/add', comment_views.comment_save, name='comment_save'),
     path('photo/<int:auction_id>/save', photo_views.photo_save, name='photo_save'),

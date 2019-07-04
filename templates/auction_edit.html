@@ -4,16 +4,16 @@
     <div class="l-auction-edit">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#general">Основные данные</a>
+                <a class="nav-link{% if not open_gallery_tab %} active{% endif %}" data-toggle="tab" href="#general">Основные данные</a>
             </li>
             {% if auction_id != 0 %}
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#photos">Фото галерея</a>
+                    <a class="nav-link{% if open_gallery_tab %} active{% endif %}" data-toggle="tab" href="#photos">Фото галерея</a>
                 </li>
             {% endif %}
         </ul>
         <div class="tab-content p-2">
-            <div class="tab-pane fade show active pt-3" id="general">
+            <div class="tab-pane fade show{% if not open_gallery_tab %} active show{% endif %} pt-3" id="general">
                 <form class="l-form" action="{% url 'auction_save' auction_id %}" method="POST">
                     {% csrf_token %}
                     <div class="form-group row">
@@ -140,7 +140,7 @@
                 </form>
             </div>
             {% if auction_id != 0 %}
-                <div class="tab-pane fade pt-3" id="photos">
+                <div class="tab-pane fade pt-3{% if open_gallery_tab %} active show{% endif %}" id="photos">
                     <div class="gallery-widget" data-photo-save-url="{% url 'photo_save' auction_id %}">
                         <div class="row">
                             <div class="col-2">
