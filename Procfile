@@ -1,1 +1,1 @@
-web: gunicorn auction-py.wsgi
+web: gunicorn AuctionApp.wsgi
