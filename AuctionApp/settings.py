@@ -25,7 +25,10 @@ SECRET_KEY = '8odyhd(c0(b2p^5%g#0bt#i@jmad@vt-cg^+4+(!-6=)+r7z#x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'auction-py.herokuapp.com'
+]
 
 
 # Application definition
