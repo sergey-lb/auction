@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,10 +26,7 @@ SECRET_KEY = '8odyhd(c0(b2p^5%g#0bt#i@jmad@vt-cg^+4+(!-6=)+r7z#x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'auction-py.herokuapp.com'
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -143,3 +141,6 @@ try:
     from AuctionApp.local_settings import *
 except ImportError:
     pass
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
