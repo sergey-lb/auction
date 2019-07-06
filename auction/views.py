@@ -9,6 +9,8 @@ from django.db import IntegrityError
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 
+ITEMS_PER_PAGE = 5
+
 
 # Create your views here.
 def home(request: HttpRequest):
@@ -27,8 +29,7 @@ def auctions(request: HttpRequest):
         search = ''
         auctions=Auction.objects.filter(started=1)
 
-    items_per_page = 10
-    paginator = Paginator(auctions, items_per_page)
+    paginator = Paginator(auctions, ITEMS_PER_PAGE)
     try:
         page = int(request.GET.get('page', 1))
     except ValueError:
@@ -53,11 +54,25 @@ def auctions(request: HttpRequest):
 
 def user_auctions(request: HttpRequest, user_id: int):
     auctions = Auction.objects.filter(user_id=user_id)
+    paginator = Paginator(auctions, ITEMS_PER_PAGE)
+    try:
+        page = int(request.GET.get('page', 1))
+    except ValueError:
+        raise Http404
+
+    if page not in paginator.page_range:
+        raise Http404
+
+    auctions = paginator.get_page(page)
+
     return render(
         request,
         template_name='auctions.html',
         context={
-            'auctions': auctions
+            'auctions': auctions,
+            'paginator': paginator,
+            'page': page,
+            'user_id': user_id
         }
     )
 

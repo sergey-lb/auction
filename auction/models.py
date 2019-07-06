@@ -46,8 +46,9 @@ class Auction(models.Model):
     def winner(self):
         if not self.finished():
             return None
-        max_bet = self.bets.order_by('-bet')[:1]
-        if not max_bet:
+        try:
+            max_bet = self.bets.order_by('-bet')[:1].get()
+        except Bet.DoesNotExist:
             return None
         winner = max_bet.user
         return winner
@@ -59,9 +60,3 @@ class Bet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
     bet = models.IntegerField()
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name='bets')
-
-
-class Image(models.Model):
-    id = models.AutoField(primary_key=True)
-    filename = models.CharField(max_length=255)
-    auction = models.ForeignKey(Auction, on_delete=models.CASCADE, related_name='images')

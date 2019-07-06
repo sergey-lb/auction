@@ -22,7 +22,11 @@
                             <div class="card-body">
                                 <a class="card-title h5 d-block" href="{% url 'auction' auction.id %}">{{ auction.name }}</a>
                                 <p>
-                                    <strong>завершается:</strong> {{ auction.end_date }}<br>
+                                    {% if not auction.finished %}
+                                        <strong>завершается:</strong> {{ auction.end_date }}<br>
+                                    {% else %}
+                                        <strong class="text-success">аукцион завершен</strong><br>
+                                    {% endif %}
                                     <strong>сделано ставок:</strong> {{ auction.bets.count }}<br>
                                     <small class="text-muted">Местоположение лота: {{ auction.location_city }}</small>
                                 </p>
@@ -41,19 +45,35 @@
                 </div>
             {% endfor %}
             {% if paginator.num_pages > 1 %}
-                <ul class="pagination">
-                    <li class="page-item"{% if page == 1 %} disabled{% endif %}>
-                        <a href="{% url 'auctions' %}?search={{ search }}&page=1" class="page-link"><span>&laquo;</span></a>
-                    </li>
-                    {% for i in paginator.page_range %}
-                        <li class="page-item{% if page == forloop.counter %} active{% endif %}">
-                            <a href="{% url 'auctions' %}?search={{ search }}&page={{ forloop.counter }}" class="page-link">{{ forloop.counter }}</a>
+                {% if request.view_name == 'auction.views.user_auctions' %}
+                    <ul class="pagination">
+                        <li class="page-item"{% if page == 1 %} disabled{% endif %}>
+                            <a href="{% url 'user_auctions' user_id %}?page=1" class="page-link"><span>&laquo;</span></a>
                         </li>
-                    {% endfor %}
-                    <li class="page-item{% if page == paginator.num_pages %} disabled{% endif %}">
-                        <a href="{% url 'auctions' %}?search={{ search }}&page={{ paginator.num_pages }}" class="page-link"><span>&raquo;</span></a>
-                    </li>
-                </ul>
+                        {% for i in paginator.page_range %}
+                            <li class="page-item{% if page == forloop.counter %} active{% endif %}">
+                                <a href="{% url 'user_auctions' user_id %}?page={{ forloop.counter }}" class="page-link">{{ forloop.counter }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item{% if page == paginator.num_pages %} disabled{% endif %}">
+                            <a href="{% url 'user_auctions' user_id %}?page={{ paginator.num_pages }}" class="page-link"><span>&raquo;</span></a>
+                        </li>
+                    </ul>
+                {% else %}
+                    <ul class="pagination">
+                        <li class="page-item"{% if page == 1 %} disabled{% endif %}>
+                            <a href="{% url 'auctions' %}?search={{ search }}&page=1" class="page-link"><span>&laquo;</span></a>
+                        </li>
+                        {% for i in paginator.page_range %}
+                            <li class="page-item{% if page == forloop.counter %} active{% endif %}">
+                                <a href="{% url 'auctions' %}?search={{ search }}&page={{ forloop.counter }}" class="page-link">{{ forloop.counter }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item{% if page == paginator.num_pages %} disabled{% endif %}">
+                            <a href="{% url 'auctions' %}?search={{ search }}&page={{ paginator.num_pages }}" class="page-link"><span>&raquo;</span></a>
+                        </li>
+                    </ul>
+                {% endif %}
             {% endif %}
         {% endif %}
     </div>

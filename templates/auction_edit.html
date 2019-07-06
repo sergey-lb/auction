@@ -103,7 +103,8 @@
                                    name="end_date"
                                    placeholder="2019-06-26 12:00"
                                    {% if form.end_date.value %}
-                                        value="{{ form.end_date.value|date:'Y-m-d H:i' }}"
+                                        {% load auction_filters %}
+                                        value="{{ form.end_date.value|auction_end_date }}"
                                    {% else %}
                                         value=""
                                    {% endif %}

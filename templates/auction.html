@@ -33,7 +33,9 @@
                 </p>
                 <hr>
                 <p>
-                    завершается: <strong>{{ auction.end_date }}</strong><br>
+                    {% if not auction.finished %}
+                        завершается: <strong>{{ auction.end_date }}</strong><br>
+                    {% endif %}
                     сделано ставок: <strong>{{ auction.bets.count }}</strong><br>
                     максимальная ставка: <strong class="text-success">{{ auction.max_bet }} р</strong>
                 </p>
@@ -67,23 +69,23 @@
                     </form>
                 {% endif %}
                 {% if permissions.can_edit %}
-                    <a href="{% url 'auction_edit' auction.id %}" class="btn btn-primary">Редактировать</a>
+                    <a href="{% url 'auction_edit' auction.id %}" class="btn btn-primary mb-3">Редактировать</a>
                 {% endif %}
                 {% if permissions.can_delete %}
-                    <a href="{% url 'auction_delete' auction.id %}" class="btn btn-danger">Удалить</a>
+                    <a href="{% url 'auction_delete' auction.id %}" class="btn btn-danger mb-3">Удалить</a>
                 {% endif %}
                 {% if permissions.can_see_winner_name %}
-                    <p class="text-warning h4">Аукцион окончен, победил {{ auction.winner.username }}</p>
+                    <p class="text-success h4">Аукцион окончен, победил {{ auction.winner.username }}</p>
                 {% endif %}
                 {% if permissions.can_see_auction_ended_message %}
-                    <p class="text-warning h4">Аукцион окончен</p>
+                    <p class="text-success h4">Аукцион окончен</p>
                 {% endif %}
                 {% if permissions.can_see_winner_contact %}
-                    <p class="text-warning">Вы можете связаться с {{ auction.winner.username }}: {{ auction.winner.email }}</p>
+                    <p class="text-success">Вы можете связаться с {{ auction.winner.username }}: {{ auction.winner.email }}</p>
                 {% endif %}
                 {% if permissions.can_see_you_win_message %}
-                    <p class="text-warning h4">Поздравляем! Вы победили!</p>
-                    <p class="text-warning">Вы можете связаться с продавцом: {{ auction.user.email }}</p>
+                    <p class="text-success h4">Поздравляем! Вы победили!</p>
+                    <p class="text-success">Вы можете связаться с продавцом: {{ auction.user.email }}</p>
                 {% endif %}
             </div>
         </div>
@@ -102,7 +104,7 @@
                 </ul>
                 <div class="tab-content p-2">
                     <div class="tab-pane fade{% if active_tab == 'description' %} show active{% endif %}" id="description" role="tabpanel" aria-labelledby="home-tab">
-                        {{ auction.description }}
+                        {{ auction.description|linebreaksbr }}
                     </div>
                     <div class="tab-pane fade{% if active_tab == 'q-and-a' %} show active{% endif %}" id="q-and-a" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="comments pt-3">
@@ -140,7 +142,7 @@
                                 <tr>
                                     <th scope="col">Дата</th>
                                     <th scope="col">Пользователь</th>
-                                    <th scope="col">Ставка (р.)</th>
+                                    <th scope="col">Ставка</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -148,7 +150,7 @@
                                         <tr>
                                             <td>{{ bet.date }}</td>
                                             <td>{{ bet.user.username }}</td>
-                                            <td>{{ bet.bet }}</td>
+                                            <td>{{ bet.bet }} р.</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
