@@ -202,9 +202,9 @@ def auction_save(request: HttpRequest, auction_id: int):
         return redirect('auction_edit', auction_id=auction_id)
 
     auction = form.save()
-    if auction_id == 0:
+    if auction_id == 0 and not auction.started:
         request.session['open_gallery_tab'] = True
-        return redirect('auction_edit', auction_id=auction_id)
+        return redirect('auction_edit', auction_id=auction.id)
     else:
         return redirect('auction', auction_id=auction.id)
 
