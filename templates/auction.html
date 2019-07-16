@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %}Auction page{% endblock %}
+{% block title %}Аукцион{% endblock %}
 {% block main %}
     <div class="l-auction">
         <div class="row">
@@ -107,7 +107,7 @@
                         {{ auction.description|linebreaksbr }}
                     </div>
                     <div class="tab-pane fade{% if active_tab == 'q-and-a' %} show active{% endif %}" id="q-and-a" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="comments pt-3">
+                        <div class="comments pt-3{% if user.is_anonymous %} guest{% endif %}">
                             <form action="{% url 'comment_save' auction.id %}" method="POST">
                                 {% csrf_token %}
                                 <div class="form-row">

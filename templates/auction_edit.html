@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %}Edit auction page{% endblock %}
+{% block title %}Редактировать аукцион{% endblock %}
 {% block main %}
     <div class="l-auction-edit">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -23,7 +23,7 @@
                                    class="form-control{% if form.name.errors %} is-invalid{% endif %}"
                                    id="name"
                                    name="name"
-                                   placeholder="Коллекционные вазы Германия"
+                                   placeholder="Bob Dylan's Greatest Hits"
                                    value="{{ form.name.value|default_if_none:"" }}">
                             {% if form.name.errors %}
                                 {% for error in form.name.errors %}
@@ -38,7 +38,7 @@
                             <textarea id="description"
                                       name="description"
                                       class="form-control{% if form.description.errors %} is-invalid{% endif %}"
-                                      placeholder="Коллекционные вазы Германия...">{{ form.description.value|default_if_none:"" }}</textarea>
+                                      placeholder="Bob Dylan's Greatest Hits...">{{ form.description.value|default_if_none:"" }}</textarea>
                             {% if form.description.errors %}
                                 {% for error in form.description.errors %}
                                     <div class="invalid-feedback">{{ error }}</div>

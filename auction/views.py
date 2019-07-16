@@ -197,12 +197,16 @@ def auction_save(request: HttpRequest, auction_id: int):
             return redirect('home')
 
     form = AuctionForm(data=request.POST, instance=auction)
-    if form.is_valid():
-        auction = form.save()
-        return redirect('auction', auction_id=auction.id)
+    if not form.is_valid():
+        request.session['auction_form_data'] = request.POST
+        return redirect('auction_edit', auction_id=auction_id)
 
-    request.session['auction_form_data'] = request.POST
-    return redirect('auction_edit', auction_id=auction_id)
+    auction = form.save()
+    if auction_id == 0:
+        request.session['open_gallery_tab'] = True
+        return redirect('auction_edit', auction_id=auction_id)
+    else:
+        return redirect('auction', auction_id=auction.id)
 
 
 @login_required

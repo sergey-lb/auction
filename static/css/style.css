@@ -50,6 +50,11 @@
     width: 100px;
 }
 
+.l-auction .comments.guest form,
+.l-auction .comments.guest .respond {
+    display: none;
+}
+
 .l-auction .comments .children {
     margin-left: 50px;
 }
@@ -82,6 +87,10 @@
 .l-auction-edit .custom-checkbox {
     position: relative;
     top: 8px;
+}
+
+.l-auction-edit .gallery-widget .btn {
+    font-size: 0.9rem;
 }
 
 .l-auction-edit .gallery-widget .items {
